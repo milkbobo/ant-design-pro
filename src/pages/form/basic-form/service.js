@@ -7,7 +7,7 @@ export async function fakeSubmitForm(params) {
 }
 export async function getCourseByMiniProgram(params) {
   return request(
-    'http://api.test.hongbeibang.com/backstage/education/getCourseByMiniProgram?educationCourseId=10321',
+    'http://api.test.hongbeibang.com/backstage/education/getCourseByMiniProgram',
     {
       params,
     },

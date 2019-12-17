@@ -16,9 +16,10 @@ import {
   message,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { connect } from 'dva';
-import moment from 'moment';
+import { PageHeaderWrapper } from '@ant-design/pro-layout/lib/index';
+import { connect } from 'dva/index';
+import {routerRedux } from 'dva/router';
+import moment from 'moment/moment';
 import CreateForm from './components/CreateForm';
 import StandardTable from './components/StandardTable';
 import UpdateForm from './components/UpdateForm';
@@ -108,7 +109,7 @@ class TableList extends Component {
         <Fragment>
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a onClick={() => this.goEdit(text)}>订阅警报</a>
         </Fragment>
       ),
     },
@@ -121,6 +122,15 @@ class TableList extends Component {
       payload: { pageSize: this.state.pageSize },
     });
   }
+
+  goEdit = (val) => {
+    this.props.dispatch(
+      routerRedux.push({
+        pathname: '/education/edit',
+        query: {educationCourseId: val.educationCourseId}
+      })
+    )
+  };
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
@@ -257,13 +267,7 @@ class TableList extends Component {
     const { getFieldDecorator } = form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
-        <Row
-          gutter={{
-            md: 8,
-            lg: 24,
-            xl: 48,
-          }}
-        >
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="课程ID">
               {getFieldDecorator('educationCourseId')(<Input placeholder="请输入" />)}
